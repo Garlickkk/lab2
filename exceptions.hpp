@@ -19,7 +19,7 @@ public:
     explicit EmptyContainerException(const std::string& msg)
         : std::runtime_error(msg) {}
 
-    EmptyContainerException() : std::runtime_error("Список пуст") {}
+    EmptyContainerException() : std::runtime_error("Контейнер пуст") {}
 };
 
 class InvalidArgumentException : public std::invalid_argument {

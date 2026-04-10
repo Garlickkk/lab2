@@ -6,7 +6,6 @@
 #include "exceptions.hpp"
 #include <iostream>
 
-
 class MutableBitSequence;
 class ImmutableBitSequence;
 
@@ -97,28 +96,28 @@ public:
     virtual ~BitSequence() override { delete data; }
 
 
-    bool GetFirst() override {
+    bool GetFirst() const override {
         if (length == 0) throw IndexOutOfRangeException("BitSequence пуст");
         return getBit(0);
     }
 
-    bool GetLast() override {
+    bool GetLast() const override {
         if (length == 0) throw IndexOutOfRangeException("BitSequence пуст");
         return getBit(length - 1);
     }
 
-    bool Get(int index) override { // бит по индексу
+    bool Get(int index) const override { // бит по индексу
         if (index < 0 || index >= length)
             throw IndexOutOfRangeException(index, length);
         return getBit(index);
     }
 
-    int GetLength() override { return length; }
+    int GetLength() const override { return length; }
 
 
-    Sequence<bool> *GetSubsequence(int startIndex, int endIndex) override;
+    Sequence<bool> *GetSubsequence(int startIndex, int endIndex) const override;
 
-    Sequence<bool> *Empty() override;
+    Sequence<bool> *Empty() const override;
 
 
     Sequence<bool> *Append(bool item) override {
@@ -156,7 +155,7 @@ public:
 
     BitSequence *BitwiseNot();
 
-    void Print(std::ostream &os = std::cout) {
+    void Print(std::ostream &os = std::cout) const {
         for (int i = 0; i < length; i++) {
             os << (getBit(i) ? '1' : '0');
         }
@@ -204,7 +203,7 @@ public:
 };
 
 //методы BitSequence для Mutable
-inline Sequence<bool> *BitSequence::GetSubsequence(int startIndex, int endIndex) {
+inline Sequence<bool> *BitSequence::GetSubsequence(int startIndex, int endIndex) const {
     if (startIndex < 0 || startIndex >= length)
         throw IndexOutOfRangeException(startIndex, length);
     if (endIndex < 0 || endIndex >= length)
@@ -222,7 +221,7 @@ inline Sequence<bool> *BitSequence::GetSubsequence(int startIndex, int endIndex)
     return result;
 }
 
-inline Sequence<bool> *BitSequence::Empty() {
+inline Sequence<bool> *BitSequence::Empty() const {
     return new MutableBitSequence();
 }
 

@@ -1,17 +1,16 @@
 #ifndef SEQUENCE_HPP
 #define SEQUENCE_HPP
 
-#include <iostream>
 #include <functional>
 
 template <class T>
 class Sequence {
 public:
-    virtual T GetFirst() = 0;
-    virtual T GetLast() = 0;
-    virtual T Get(int index) = 0;
-    virtual Sequence<T>* GetSubsequence(int startIndex, int endIndex) = 0;
-    virtual int GetLength() = 0;
+    virtual T GetFirst() const = 0;
+    virtual T GetLast() const = 0;
+    virtual T Get(int index) const = 0;
+    virtual Sequence<T>* GetSubsequence(int startIndex, int endIndex) const = 0;
+    virtual int GetLength() const = 0;
 
 
     virtual Sequence<T>* Append(T item) = 0;
@@ -19,9 +18,9 @@ public:
     virtual Sequence<T>* InsertAt(T item, int index) = 0;
     virtual Sequence<T>* Concat(Sequence<T>* other) = 0;
 
-    virtual Sequence<T>* Empty() = 0; // пустая последовтальнолсть
+    virtual Sequence<T>* Empty() const = 0; // пустая последовтальнолсть
 
-    Sequence<T>* Map(std::function<T(T)> f) {
+    Sequence<T>* Map(std::function<T(T)> f) const {
         Sequence<T>* result = Empty();
         for (int i = 0; i < GetLength(); i++) {
             result->Append(f(Get(i)));
@@ -29,7 +28,7 @@ public:
         return result;
     }
 
-    Sequence<T>* Map(std::function<T(T, int)> f) { // (М-2.2)
+    Sequence<T>* Map(std::function<T(T, int)> f) const { // (М-2.2)
         Sequence<T>* result = Empty();
         for (int i = 0; i < GetLength(); i++) {
             result->Append(f(Get(i), i));
@@ -37,7 +36,7 @@ public:
         return result;
     }
 
-    Sequence<T>* Where(std::function<bool(T)> f) {
+    Sequence<T>* Where(std::function<bool(T)> f) const {
         Sequence<T>* result = Empty();
         for (int i = 0; i < GetLength(); i++) {
             if (f(Get(i))) {
@@ -47,7 +46,7 @@ public:
         return result;
     }
 
-    T Reduce(std::function<T(T, T)> f, T init) {
+    T Reduce(std::function<T(T, T)> f, T init) const {
         T acc = init;
         for (int i = 0; i < GetLength(); i++) {
             acc = f(acc, Get(i));
@@ -55,7 +54,7 @@ public:
         return acc;
     }
 
-    Sequence<T>* Zip(Sequence<T>* other, std::function<T(T, T)> f) {
+    Sequence<T>* Zip(Sequence<T>* other, std::function<T(T, T)> f) const {
         int len = std::min(GetLength(), other->GetLength());
         Sequence<T>* result = Empty();
         for (int i = 0; i < len; i++) {
@@ -64,7 +63,7 @@ public:
         return result;
     }
 
-    Sequence<T>* FlatMap(std::function<Sequence<T>*(T)> f) {
+    Sequence<T>* FlatMap(std::function<Sequence<T>*(T)> f) const {
         Sequence<T>* result = Empty();
         for (int i = 0; i < GetLength(); i++) {
             Sequence<T>* sub = f(Get(i));
@@ -76,7 +75,7 @@ public:
         return result;
     }
 
-    Sequence<T>* Skip(int n) {
+    Sequence<T>* Skip(int n) const {
         Sequence<T>* result = Empty();
         for (int i = n; i < GetLength(); i++) {
             result->Append(Get(i));
@@ -84,7 +83,7 @@ public:
         return result;
     }
 
-    Sequence<T>* Take(int n) {
+    Sequence<T>* Take(int n) const {
         Sequence<T>* result = Empty();
         int limit = std::min(n, GetLength());
         for (int i = 0; i < limit; i++) {
@@ -94,11 +93,11 @@ public:
     }
 
 
-    T operator[](int index) { // перезагрузка операторов квад скобок для обрщ с эл посл как с мас
+    T operator[](int index) const { // перезагрузка операторов квад скобок для обрщ с эл посл как с мас
         return Get(index);
     }
 
-    friend std::ostream& operator<<(std::ostream& os, Sequence<T>& seq) { // перегрузка оператора сдвига влево.
+    friend std::ostream& operator<<(std::ostream& os, const Sequence<T>& seq) { // перегрузка оператора сдвига влево.
         os << "[";
         for (int i = 0; i < seq.GetLength(); i++) {
             if (i > 0) os << ", ";

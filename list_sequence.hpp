@@ -24,17 +24,17 @@ public:
     ListSequence(const ListSequence<T>& other);
     ~ListSequence() override;
 
-    T GetFirst() override;
-    T GetLast() override;
-    T Get(int index) override;
-    Sequence<T>* GetSubsequence(int startIndex, int endIndex) override;
-    int GetLength() override;
+    T GetFirst() const override;
+    T GetLast() const override;
+    T Get(int index) const override;
+    Sequence<T>* GetSubsequence(int startIndex, int endIndex) const override;
+    int GetLength() const override;
 
     Sequence<T>* Append(T item) override;
     Sequence<T>* Prepend(T item) override;
     Sequence<T>* InsertAt(T item, int index) override;
     Sequence<T>* Concat(Sequence<T>* other) override;
-    Sequence<T>* Empty() override;
+    Sequence<T>* Empty() const override;
 };
 
 template <class T>
@@ -71,22 +71,22 @@ void ListSequence<T>::InsertAtInternal(T item, int index) {
 }
 
 template <class T>
-T ListSequence<T>::GetFirst() {
+T ListSequence<T>::GetFirst() const {
     return items->GetFirst();
 }
 
 template <class T>
-T ListSequence<T>::GetLast() {
+T ListSequence<T>::GetLast() const {
     return items->GetLast();
 }
 
 template <class T>
-T ListSequence<T>::Get(int index) {
+T ListSequence<T>::Get(int index) const {
     return items->Get(index);
 }
 
 template <class T>
-Sequence<T>* ListSequence<T>::GetSubsequence(int startIndex, int endIndex) {
+Sequence<T>* ListSequence<T>::GetSubsequence(int startIndex, int endIndex) const {
     if (startIndex < 0 || startIndex >= items->GetLength())
         throw IndexOutOfRangeException("startIndex вне диапазона");
     if (endIndex < 0 || endIndex >= items->GetLength())
@@ -101,7 +101,7 @@ Sequence<T>* ListSequence<T>::GetSubsequence(int startIndex, int endIndex) {
 }
 
 template <class T>
-int ListSequence<T>::GetLength() {
+int ListSequence<T>::GetLength() const {
     return items->GetLength();
 }
 
@@ -136,7 +136,7 @@ Sequence<T>* ListSequence<T>::Concat(Sequence<T>* other) {
 }
 
 template <class T>
-Sequence<T>* ListSequence<T>::Empty() {
+Sequence<T>* ListSequence<T>::Empty() const {
     return new MutableListSequence<T>();
 }
 

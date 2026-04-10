@@ -22,15 +22,15 @@ public:
     LinkedList<T>& operator=(const LinkedList<T> &other); // Оператор присваивания
     ~LinkedList();
 
-    T GetFirst();
+    T GetFirst() const; // сделать константы
 
-    T GetLast();
+    T GetLast() const;
 
-    T Get(int index);
+    T Get(int index) const;
 
-    LinkedList<T> *GetSubList(int startIndex, int endIndex);
+    LinkedList<T> *GetSubList(int startIndex, int endIndex) const;
 
-    int GetLength();
+    int GetLength() const;
 
     void Append(T item);
 
@@ -125,7 +125,7 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T> &other) {
 }
 
 template<typename T>
-T LinkedList<T>::GetFirst() {
+T LinkedList<T>::GetFirst() const {
     if (this->head == nullptr) {
         throw IndexOutOfRangeException("Список пуст");
     }
@@ -133,7 +133,7 @@ T LinkedList<T>::GetFirst() {
 }
 
 template<typename T>
-T LinkedList<T>::GetLast() {
+T LinkedList<T>::GetLast() const {
     if (this->tail == nullptr) {
         throw IndexOutOfRangeException("Список пуст");
     }
@@ -141,7 +141,7 @@ T LinkedList<T>::GetLast() {
 }
 
 template<typename T>
-T LinkedList<T>::Get(int index) {
+T LinkedList<T>::Get(int index) const {
     if (this->head == nullptr) {
         throw IndexOutOfRangeException("Список пуст");
     }
@@ -156,7 +156,7 @@ T LinkedList<T>::Get(int index) {
 }
 
 template<typename T>
-LinkedList<T> *LinkedList<T>::GetSubList(int startIndex, int endIndex) {
+LinkedList<T> *LinkedList<T>::GetSubList(int startIndex, int endIndex) const {
     if (this->head == nullptr) {
         throw IndexOutOfRangeException("Список пуст");
     }
@@ -183,7 +183,7 @@ LinkedList<T> *LinkedList<T>::GetSubList(int startIndex, int endIndex) {
 }
 
 template<typename T>
-int LinkedList<T>::GetLength() {
+int LinkedList<T>::GetLength() const {
     return this->size;
 }
 
@@ -258,6 +258,5 @@ LinkedList<T>::~LinkedList() {
         current = next;
     }
 }
-
 
 #endif

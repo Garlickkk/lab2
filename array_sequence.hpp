@@ -55,27 +55,27 @@ public:
 
     ~ArraySequence() override { delete items; }
 
-    T GetFirst() override {
+    T GetFirst() const override {
         if (items->GetSize() == 0)
             throw IndexOutOfRangeException("Последовательность пуста");
         return items->Get(0);
     }
 
-    T GetLast() override {
+    T GetLast() const override {
         if (items->GetSize() == 0)
             throw IndexOutOfRangeException("Последовательность пуста");
         return items->Get(items->GetSize() - 1);
     }
 
-    T Get(int index) override {
+    T Get(int index) const override {
         return items->Get(index);
     }
 
-    int GetLength() override {
+    int GetLength() const override {
         return items->GetSize();
     }
 
-    Sequence<T> *GetSubsequence(int startIndex, int endIndex) override;
+    Sequence<T> *GetSubsequence(int startIndex, int endIndex) const override;
 
     Sequence<T> *Append(T item) override {
         ArraySequence<T> *inst = Instance();
@@ -97,19 +97,19 @@ public:
 
     Sequence<T> *Concat(Sequence<T> *other) override;
 
-    Sequence<T> *Empty() override;
+    Sequence<T> *Empty() const override;
 };
 
 template<class T>
 class MutableArraySequence;
 
 template<class T>
-Sequence<T> *ArraySequence<T>::Empty() {
+Sequence<T> *ArraySequence<T>::Empty() const {
     return new MutableArraySequence<T>();
 }
 
 template<class T>
-Sequence<T> *ArraySequence<T>::GetSubsequence(int startIndex, int endIndex) {
+Sequence<T> *ArraySequence<T>::GetSubsequence(int startIndex, int endIndex) const {
     if (startIndex < 0 || startIndex >= items->GetSize())
         throw IndexOutOfRangeException(startIndex, items->GetSize());
     if (endIndex < 0 || endIndex >= items->GetSize())
