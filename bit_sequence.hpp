@@ -4,7 +4,6 @@
 #include "sequence.hpp"
 #include "dynamic_array.hpp"
 #include "exceptions.hpp"
-#include <iostream>
 
 class MutableBitSequence;
 class ImmutableBitSequence;
@@ -154,12 +153,6 @@ public:
     BitSequence *BitwiseXor(BitSequence *other);
 
     BitSequence *BitwiseNot();
-
-    void Print(std::ostream &os = std::cout) const {
-        for (int i = 0; i < length; i++) {
-            os << (getBit(i) ? '1' : '0');
-        }
-    }
 };
 
 //Mutable
