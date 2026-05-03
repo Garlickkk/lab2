@@ -97,16 +97,6 @@ public:
         return Get(index);
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const Sequence<T>& seq) { // перегрузка оператора сдвига влево.
-        os << "[";
-        for (int i = 0; i < seq.GetLength(); i++) {
-            if (i > 0) os << ", ";
-            os << seq.Get(i);
-        }
-        os << "]";
-        return os;
-    }
-
     virtual ~Sequence() = default;
 };
 
